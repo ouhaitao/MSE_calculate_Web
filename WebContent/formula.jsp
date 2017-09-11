@@ -20,9 +20,9 @@ $(document).ready(
 </head>
 <body>
 	<c:forEach items="${formula }" var="f">
-		<c:out value="${f}"/><br/>
-		请输入答案:<input type="text" style="width:50px"/><br>
-		<div class="res"><c:out value="${f.result }"/></div>
+		<c:out value="${f}"/>
+		<span class="res"><c:out value="${f.result }"/></span>
+		<br/>请输入答案:<input type="text" style="width:50px"/><br>
 	</c:forEach>
 	<br/>
 	<input type="button" id="input" onclick="getRes()" value="显示/隐藏答案"/>
