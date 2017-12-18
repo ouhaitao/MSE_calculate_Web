@@ -13,14 +13,9 @@ public class Contro {
 	@Autowired
 	private MainDao mainDao;
 	
-	
 	@RequestMapping("/calculator.do")
 	public String calculator(Model model, int flagNumber){
-		if(flagNumber==0)
-			model.addAttribute("formula", mainDao.calculator(2));
-		else
-			model.addAttribute("formula", mainDao.calculator(flagNumber));
-				
+		model.addAttribute("formula", mainDao.calculator(flagNumber));
 		return "formula";
 	}
 

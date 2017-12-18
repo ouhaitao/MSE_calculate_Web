@@ -2,7 +2,6 @@ package Dao;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Stack;
 
 import org.springframework.stereotype.Service;
 
@@ -12,78 +11,37 @@ import po.Formula;
 public class Main implements MainDao{
 	
 	public List<Formula> calculator(int flagNumber) {
-		List<Formula> FormulaList = new ArrayList<>();// 生成的算式
+		List<Formula> formula=new ArrayList<>();
 		int i = 0;
 		while (i < 10) {
-			Formula formula = new Formula();
 			List<Integer> number = new ArrayList<>();
 
 			// 生成参数
-			for (int j = 0; j < flagNumber; j++) {
+			for (int j = 0; j < flagNumber; j++) 
 				number.add((int) (Math.random() * 99 + 1));
-			}
-			int j = 0;
+			
 			int flagNum = 1;
-			List<String> flags = new ArrayList<>();
+			List<Character> flags = new ArrayList<>();
 
 			// 生成符号
 			do {
-				j = (int) (Math.random() * 4);
-				if (j != 4) {
-					flags.add(flag[j]);
-					flagNum++;
-				}
-			} while (j == 4 || flagNum < flagNumber);
+				int j = (int) (Math.random() * 4);
+				flags.add(flag[j]);
+				flagNum++;
+			} while (flagNum < flagNumber);
 
 			// 连接算式
-			String formulaString = number.get(0).toString();
+			StringBuffer formulaString=new StringBuffer(""+number.get(0));
 			for (int x = 1; x < number.size(); x++) {
 				int n = number.get(x);
-				String f = flags.get(x - 1);
-				formulaString = formulaString + f + Integer.toString(n);
+				char f = flags.get(x - 1);
+				formulaString.append(f+String.valueOf(n));
 			}
-			float result = 0;
-			Stack<Float> is = new Stack<>();
-			Stack<String> ss = new Stack<>();
-			System.out.println(formulaString);
-
-			// 计算算式中的乘除法
-			is.push(number.get(0).floatValue());
-			for (int x = 0; x < flags.size(); x++) {
-				String f = flags.get(x);
-				if (f.equals("*") || f.equals("/")) {
-					if (f.equals("*"))
-						is.push(is.pop() * number.get(x + 1));
-					else
-						is.push(is.pop() / number.get(x + 1));
-				} else {
-					ss.push(f);
-					is.push(number.get(x + 1).floatValue());
-				}
-			}
-			
-			// 计算算式的中的加减法
-			result = is.get(0);
-			int numSize=is.size();
-			// 数字栈有数字时,即算式含有加减法
-			for (int k = 1; k < numSize; k++) {
-				float n = is.get(k);
-				String f = ss.get(k-1);
-				if (f.equals("-"))
-					result -=n ;
-				else
-					result += n;
-			}
-
-			formula.setFlag(flags);
-			formula.setNumber(number);
-			formula.setResult(result);
-			formula.setFormulaString(formulaString);
-			if (!FormulaList.contains(formula)) {
-				FormulaList.add(formula);
-				i++;
-			}
+			//计算值
+			float result=Calculator.Calculation_last(formulaString.toString());
+			formula.add(new Formula(result, formulaString.toString()));
+			i++;
 		}
-		return FormulaList;
+		return formula;
 	}
 }

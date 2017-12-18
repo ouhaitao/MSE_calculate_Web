@@ -1,35 +1,19 @@
 package po;
 
-import java.util.List;
-
 public class Formula {
 
-	private List<Integer> number;
-	private List<String> flag;
 	private float result;
 	private String formulaString;
 
-	public List<Integer> getNumber() {
-		return number;
+	public Formula(float result, String formulaString) {
+		super();
+		this.result = result;
+		this.formulaString = formulaString;
 	}
-
-
+	
 	@Override
 	public String toString() {
 		return formulaString + "=";
-	}
-
-
-	public void setNumber(List<Integer> number) {
-		this.number = number;
-	}
-
-	public List<String> getFlag() {
-		return flag;
-	}
-
-	public void setFlag(List<String> flag) {
-		this.flag = flag;
 	}
 
 	public float getResult() {
@@ -40,12 +24,19 @@ public class Formula {
 		this.result = result;
 	}
 
+	public String getFormulaString() {
+		return formulaString;
+	}
+
+	public void setFormulaString(String formulaString) {
+		this.formulaString = formulaString;
+	}
+
 	@Override
 	public int hashCode() {
 		final int prime = 31;
 		int result = 1;
-		result = prime * result + ((flag == null) ? 0 : flag.hashCode());
-		result = prime * result + ((number == null) ? 0 : number.hashCode());
+		result = prime * result + ((formulaString == null) ? 0 : formulaString.hashCode());
 		result = prime * result + Float.floatToIntBits(this.result);
 		return result;
 	}
@@ -59,27 +50,14 @@ public class Formula {
 		if (getClass() != obj.getClass())
 			return false;
 		Formula other = (Formula) obj;
-		if (flag == null) {
-			if (other.flag != null)
+		if (formulaString == null) {
+			if (other.formulaString != null)
 				return false;
-		} else if (!flag.equals(other.flag))
-			return false;
-		if (number == null) {
-			if (other.number != null)
-				return false;
-		} else if (!number.equals(other.number))
+		} else if (!formulaString.equals(other.formulaString))
 			return false;
 		if (Float.floatToIntBits(result) != Float.floatToIntBits(other.result))
 			return false;
 		return true;
-	}
-
-	public String getFormulaString() {
-		return formulaString;
-	}
-
-	public void setFormulaString(String formulaString) {
-		this.formulaString = formulaString;
 	}
 
 }
